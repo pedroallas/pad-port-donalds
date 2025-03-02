@@ -34,10 +34,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<CartProduct[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-const total = products.reduce((acc, product) => { 
-  return acc + product.price * product.quantity;
-}
-, 0);
+  const total = products.reduce((acc, product) => {
+    return acc + product.price * product.quantity;
+  }, 0);
   const toggleCart = () => {
     setIsOpen((prev) => !prev);
   };
@@ -66,10 +65,10 @@ const total = products.reduce((acc, product) => {
         if (prevProduct.id !== productId) {
           return prevProduct;
         }
-          if (prevProduct.quantity === 1) {
-            return prevProduct;
-          }
-          return {...prevProduct, quantity: prevProduct.quantity - 1, };
+        if (prevProduct.quantity === 1) {
+          return prevProduct;
+        }
+        return { ...prevProduct, quantity: prevProduct.quantity - 1 };
       });
     });
   };
@@ -79,12 +78,14 @@ const total = products.reduce((acc, product) => {
         if (prevProduct.id !== productId) {
           return prevProduct;
         }
-        return {...prevProduct, quantity: prevProduct.quantity + 1, };
+        return { ...prevProduct, quantity: prevProduct.quantity + 1 };
       });
     });
   };
   const removeProduct = (productId: string) => {
-    setProducts(prevProducts => prevProducts.filter(prevProduct => prevProduct.id !== productId));
+    setProducts((prevProducts) =>
+      prevProducts.filter((prevProduct) => prevProduct.id !== productId),
+    );
   };
   return (
     <CartContext.Provider
