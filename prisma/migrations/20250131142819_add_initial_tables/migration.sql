@@ -36,7 +36,7 @@ CREATE TABLE "Product" (
     "description" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "imageUrl" TEXT NOT NULL,
-    "Ingredients" TEXT[],
+    "ingredients" TEXT[],
     "restaurantId" TEXT NOT NULL,
     "menuCategoryId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

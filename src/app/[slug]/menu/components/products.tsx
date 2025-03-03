@@ -1,4 +1,4 @@
-import { ConsumptionMethod, Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";

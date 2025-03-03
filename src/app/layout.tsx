@@ -1,6 +1,10 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
+
+import { Toaster } from "@/components/ui/sonner";
+
 import { CartProvider } from "./[slug]/menu/contexts/cart";
 
 const poppins = Poppins({
@@ -9,8 +13,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "DUALLAS Donalds",
-  description: "O melhor fast food do mundo",
+  title: "FSW Donalds",
+  description: "Bora finalizar esse projeto lindo!",
 };
 
 export default function RootLayout({
@@ -21,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <CartProvider>
-        {children}
-        </CartProvider>
-        </body>
+        <CartProvider>{children}</CartProvider>
+
+        <Toaster/>
+      </body>
     </html>
   );
 }

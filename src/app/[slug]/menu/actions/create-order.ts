@@ -1,15 +1,18 @@
 "use server";
 
-import { db } from "@/lib/prisma";
 import { ConsumptionMethod } from "@prisma/client";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+import { db } from "@/lib/prisma";
+
 import { removeCpfPunctuation } from "../helpers/cpf";
 
 interface CreateOrderInput {
   customerName: string;
   customerCpf: string;
   products: Array<{
-    id: any;
-    Id: string;
+    id: string;
     quantity: number;
   }>;
   consumptionMethod: ConsumptionMethod;
@@ -19,8 +22,8 @@ interface CreateOrderInput {
 export const createOrder = async (input: CreateOrderInput) => {
   const restaurant = await db.restaurant.findUnique({
     where: {
-       slug: input.slug, 
-      },
+      slug: input.slug,
+    },
   });
   if (!restaurant) {
     throw new Error("Restaurant not found");
@@ -55,4 +58,8 @@ export const createOrder = async (input: CreateOrderInput) => {
       restaurantId: restaurant.id,
     },
   });
+  revalidatePath(`/${input.slug}/orders`);
+  redirect(
+    `/${input.slug}/orders?cpf=${removeCpfPunctuation(input.customerCpf)}`,
+  );
 };
